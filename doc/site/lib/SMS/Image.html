@@ -1,0 +1,157 @@
+<HTML>
+<HEAD>
+<TITLE>SMS::Image - common image conversion functions for use in SMS applications.</TITLE>
+<LINK REL="stylesheet" HREF="../../../Active.css" TYPE="text/css">
+<LINK REV="made" HREF="mailto:">
+</HEAD>
+
+<BODY>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH=100%>
+<TR><TD CLASS=block VALIGN=MIDDLE WIDTH=100% BGCOLOR="#cccccc">
+<FONT SIZE=+1><STRONG><P CLASS=block>&nbsp;SMS::Image - common image conversion functions for use in SMS applications.</P></STRONG></FONT>
+</TD></TR>
+</TABLE>
+
+<A NAME="__index__"></A>
+<!-- INDEX BEGIN -->
+
+<UL>
+
+	<LI><A HREF="#name">NAME</A></LI>
+	<LI><A HREF="#synopsis">SYNOPSIS</A></LI>
+	<LI><A HREF="#description">DESCRIPTION</A></LI>
+	<LI><A HREF="#functions">FUNCTIONS</A></LI>
+	<LI><A HREF="#history">HISTORY</A></LI>
+	<LI><A HREF="#author">AUTHOR</A></LI>
+	<LI><A HREF="#copyright">COPYRIGHT</A></LI>
+</UL>
+<!-- INDEX END -->
+
+<HR>
+<P>
+<H1><A NAME="name">NAME</A></H1>
+<P>SMS::Image - common image conversion functions for use in SMS applications.</P>
+<P>
+<HR>
+<H1><A NAME="synopsis">SYNOPSIS</A></H1>
+<PRE>
+ use SMS::Image qw(png_to_ota);</PRE>
+<PRE>
+ # Read PNG data from file, convert into OTA bitmap, and write back to file.
+ my $png;
+ my $buf; # temporary buffer
+ open(F,'&lt;test.png') || die;
+ binmode(F);
+ while(read F, $buf, 1024) {
+  $png .= $buf;
+ }
+ close(F);
+ my $ota;
+ &amp;png_to_ota(\$png,\$ota);
+ open(F,'&gt;test.ota') || die;
+ binmode(F);
+ print F $ota;
+ close(F);</PRE>
+<P>
+<HR>
+<H1><A NAME="description">DESCRIPTION</A></H1>
+<P>SMS::Image contains common image conversion functions for use in SMS
+applications.</P>
+<P>
+<HR>
+<H1><A NAME="functions">FUNCTIONS</A></H1>
+<P>All functions have no return value.</P>
+<DL>
+<DT><STRONG><A NAME="item_gif_to_ota"><CODE>gif_to_ota(\$gif,\$ota)</CODE></A></STRONG><BR>
+<DD>
+Converts monochrome GIF image into an OTA bitmap. The module Image::Magick
+must be installed in order to use this function.
+<P>Parameters:</P>
+<PRE>
+ 1. Reference to GIF image buffer.
+ 2. Reference to receive buffer for OTA bitmap.</PRE>
+<P></P>
+<DT><STRONG><A NAME="item_ota_to_gif"><CODE>ota_to_gif(\$ota,\$gif)</CODE></A></STRONG><BR>
+<DD>
+Converts a monochrome OTA bitmap into a monochrome GIF image.
+<P>Parameters:</P>
+<PRE>
+ 1. Reference to OTA image buffer.
+ 2. Reference to receive buffer for GIF bitmap.</PRE>
+<P></P>
+<DT><STRONG><A NAME="item_png_to_ota"><CODE>png_to_ota(\$png,\$ota)</CODE></A></STRONG><BR>
+<DD>
+Converts monochrome PNG image into an OTA bitmap. The module Image::Magick
+must be installed in order to use this function.
+<P>Parameters:</P>
+<PRE>
+ 1. Reference to PNG image buffer.
+ 2. Reference to receive buffer for OTA bitmap.</PRE>
+<P></P>
+<DT><STRONG><A NAME="item_ota_to_png"><CODE>ota_to_png(\$ota,\$png)</CODE></A></STRONG><BR>
+<DD>
+Converts a monochrome OTA bitmap into a monochrome PNG image.
+<P>Parameters:</P>
+<PRE>
+ 1. Reference to OTA image buffer.
+ 2. Reference to receive buffer for PNG bitmap.</PRE>
+<P></P>
+<DT><STRONG><A NAME="item_raw_to_ota"><CODE>raw_to_ota(\$raw,$width,$height,$bits_per_pixel,\$ota)</CODE></A></STRONG><BR>
+<DD>
+Converts a raw binary image into an OTA bitmap. The raw binary image is a
+buffer of pixels from left to right and top to bottom where the top left
+pixel is the lowest order bit and the bottom right pixel is the highest order
+bit.
+<P>Parameters:</P>
+<PRE>
+ 1. Reference to raw binary image buffer.
+ 2. Image width.
+ 3. Image height.
+ 4. Color depth (currently only a value of 1 is supported).
+ 5. Reference to receive buffer for OTA bitmap.</PRE>
+<P>Returns boolean result.</P>
+<P></P>
+<DT><STRONG><A NAME="item_ota_to_raw"><CODE>ota_to_raw(\$ota,\$raw)</CODE></A></STRONG><BR>
+<DD>
+Converts an OTA bitmap into a raw binary image. The raw binary image is a
+buffer of pixels from left to right and top to bottom where the top left
+pixel is the lowest order bit and the bottom right pixel is the highest order
+bit. Only single image monoschrome OTA bitmaps are currently supported.
+<P>Parameters:</P>
+<PRE>
+ 1. Reference to OTA bitmap buffer.
+ 2. Reference to receive buffer for raw binary image.</PRE>
+<P>Returns array of image width, image height, color depth.</P>
+<P></P></DL>
+<P>
+<HR>
+<H1><A NAME="history">HISTORY</A></H1>
+<DL>
+<DT><STRONG><A NAME="item_Version_0%2E01_2001%2D11%2D05">Version 0.01  2001-11-05</A></STRONG><BR>
+<DD>
+Initial version
+<P></P>
+<DT><STRONG><A NAME="item_Version_0%2E02_2001%2D11%2D07">Version 0.02  2001-11-07</A></STRONG><BR>
+<DD>
+Added support for GIF to OTA bitmap conversion and vice versa.
+<P></P></DL>
+<P>
+<HR>
+<H1><A NAME="author">AUTHOR</A></H1>
+<P>Craig Manley	<A HREF="mailto:c.manley@skybound.nl">c.manley@skybound.nl</A></P>
+<P>
+<HR>
+<H1><A NAME="copyright">COPYRIGHT</A></H1>
+<P>Copyright (C) 2001 Craig Manley &lt;<A HREF="mailto:c.manley@skybound.nl">c.manley@skybound.nl</A>&gt;.  All rights reserved.
+This program is free software; you can redistribute it and/or modify
+it under under the same terms as Perl itself. There is NO warranty;
+not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.</P>
+<TABLE BORDER=0 CELLPADDING=0 CELLSPACING=0 WIDTH=100%>
+<TR><TD CLASS=block VALIGN=MIDDLE WIDTH=100% BGCOLOR="#cccccc">
+<FONT SIZE=+1><STRONG><P CLASS=block>&nbsp;SMS::Image - common image conversion functions for use in SMS applications.</P></STRONG></FONT>
+</TD></TR>
+</TABLE>
+
+</BODY>
+
+</HTML>
